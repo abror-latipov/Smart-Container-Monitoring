@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: iot-container-monitor
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+
+  datasource:
+    # Use H2 local in-memory database
+    url: jdbc:h2:mem:monitor;DB_CLOSE_DELAY=-1;MODE=PostgreSQL
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update # Automatically creates H2 schemas from entities
+    show-sql: true
+    defer-datasource-initialization: true # Ensures schema is created before data.sql runs
+
+  sql:
+    init:
+      mode: always

@@ -1,0 +1,73 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-main: #f8fafc;
+    --bg-card: rgba(255, 255, 255, 0.8);
+    --bg-sidebar: #ffffff;
+    --text-primary: #0f172a;
+    --text-secondary: #64748b;
+    --text-data: #0f172a;
+    --border-color: #e2e8f0;
+    --shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  }
+
+  .dark {
+    --bg-main: #0f172a;
+    --bg-card: rgba(30, 41, 59, 0.8);
+    --bg-sidebar: #1e293b;
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --text-data: #90ee90; /* lightGreen */
+    --border-color: #334155;
+    --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.3);
+  }
+
+  body {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    @apply transition-colors duration-300 font-sans;
+  }
+}
+
+@layer components {
+  .glass-card {
+    background-color: var(--bg-card);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow);
+    @apply rounded-2xl transition-all duration-300;
+  }
+  
+  .btn-primary {
+    @apply bg-primary-600 hover:bg-primary-700 text-white font-medium py-2.5 px-4 rounded-xl transition-all active:scale-95 disabled:opacity-50 shadow-lg shadow-primary-500/20;
+  }
+
+  .sidebar-link {
+    @apply flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200;
+    color: var(--text-secondary);
+  }
+
+  .sidebar-link:hover {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+  }
+
+  .sidebar-link.active {
+    @apply bg-primary-50 text-primary-600 font-semibold;
+  }
+
+  .dark .sidebar-link.active {
+    @apply bg-primary-900/20 text-primary-400;
+  }
+}
+
+/* Leaflet Dark Mode Fix */
+.dark .leaflet-tile {
+  filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
+}
+.dark .leaflet-container {
+  background: #1e293b;
+}

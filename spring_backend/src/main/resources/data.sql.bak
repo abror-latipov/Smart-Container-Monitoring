@@ -1,0 +1,9 @@
+-- Seed Containers
+INSERT INTO containers (name, status, created_at, updated_at) VALUES ('Container-001', 'ACTIVE', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO containers (name, status, created_at, updated_at) VALUES ('Container-002', 'ACTIVE', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO containers (name, status, created_at, updated_at) VALUES ('Container-003', 'ACTIVE', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+-- Seed Telemetry
+INSERT INTO telemetry (id, container_id, temperature, humidity, latitude, longitude, created_at) VALUES (1, 1, 22.5, 45.0, 37.7749, -122.4194, CURRENT_TIMESTAMP);
+INSERT INTO telemetry (id, container_id, temperature, humidity, latitude, longitude, created_at) VALUES (2, 1, 23.0, 44.5, 37.7750, -122.4195, CURRENT_TIMESTAMP);
+INSERT INTO telemetry (id, container_id, temperature, humidity, latitude, longitude, created_at) VALUES (3, 2, 18.2, 55.0, 40.7128, -74.0060, CURRENT_TIMESTAMP);
