@@ -1,0 +1,75 @@
+services:
+  mosquitto:
+    image: eclipse-mosquitto:latest
+    container_name: mosquitto_broker
+    ports:
+      - "1883:1883"
+      - "9001:9001" # WebSockets
+    volumes:
+      - ./mosquitto/config:/mosquitto/config
+      - ./mosquitto/data:/mosquitto/data
+      - ./mosquitto/log:/mosquitto/log
+    restart: unless-stopped
+    networks:
+      - iot_network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: fastapi_backend
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      - PYTHONUNBUFFERED=1
+    depends_on:
+      - mosquitto
+    restart: unless-stopped
+    networks:
+      - iot_network
+
+  telegram_bot:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: telegram_bot
+    command: ["python", "telegram_bot.py"]
+    env_file:
+      - .env
+    environment:
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped
+    networks:
+      - iot_network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: frontend_dashboard
+    ports:
+      - "5173:5173"
+    env_file:
+      - .env
+    restart: unless-stopped
+    networks:
+      - iot_network
+
+  spring_backend:
+    build:
+      context: ./spring_backend
+      dockerfile: Dockerfile
+    container_name: spring_backend
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    restart: unless-stopped
+    networks:
+      - iot_network
+
+networks:
+  iot_network:
+    driver: bridge
